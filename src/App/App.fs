@@ -45,6 +45,10 @@ let root model dispatch =
     // | Counter -> Counter.View.root model.counter (CounterMsg >> dispatch)
     | ImageType -> ImageType.View.root model.imageType (ImageTypeMsg >> dispatch)
     | Location -> Location.View.root model.location (LocationMsg >> dispatch)
+    // | Location i ->
+    //   // TODO horrible way of passing through image type
+    //   let location = { model.location with imageTypeIndex = i }
+    //   Location.View.root location (LocationMsg >> dispatch)
 
   div
     []

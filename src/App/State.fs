@@ -12,7 +12,7 @@ let pageParser: Parser<Page->Page,Page> =
     // map About (s "about")
     // map Counter (s "counter")
     map ImageType (s "imagetype")
-    map Location (s "location")
+    map Location (s "location") // TODO KE
   ]
 
 let urlUpdate (result: Option<Page>) model =

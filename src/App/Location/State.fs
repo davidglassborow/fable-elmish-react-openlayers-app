@@ -5,7 +5,7 @@ open Types
 open Fable.Helpers
 
 let init () : Model * Cmd<Msg> =
-    let imageTypeIndex = 1 // TODO pass through URL?
+    let imageTypeIndex = 0 // TODO pass through URL?
     let imageType = Cadastral.ImageType.imageTypes.[imageTypeIndex]
     {   name = imageType.Name
         imageTypeIndex = imageTypeIndex 
@@ -24,3 +24,4 @@ let update msg model : Model * Cmd<Msg> =
         }, Cmd.none
     | ChangeOrientation orientation ->
         { model with orientation = orientation }, Cmd.none
+ 

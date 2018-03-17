@@ -11,4 +11,5 @@ let init () : Model * Cmd<Msg> =
 let update msg model : Model * Cmd<Msg> =
     match msg with
     | SelectLocation imageType ->
-        model, Navigation.newUrl "#location"
+        { imageType = imageType }, Navigation.newUrl "#location"
+

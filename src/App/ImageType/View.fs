@@ -13,4 +13,4 @@ let root model dispatch =
                         span [] [ str imageType.Name
                                   img [ Props.Src imageType.ThumbnailUrl
                                         Props.OnClick (fun _ -> dispatch (SelectLocation imageType)) ]
-                                ])) ]
+                                ])) ] 

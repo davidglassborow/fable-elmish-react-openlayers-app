@@ -28,8 +28,4 @@ let root model dispatch =
             Zoom model.zoom
             Orientation model.orientation
         ] []
-        [   "Rīga", 24.106389, 56.948889, 15.
-            "London", -0.1275, 51.507222, 13.
-        ]   |> List.map (placeButton dispatch)
-            |> div []
     ]
