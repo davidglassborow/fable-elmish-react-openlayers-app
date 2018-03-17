@@ -1,31 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <!-- Global to the app -->
+    <ProjectReference Include="../Fable.Import/Fable.Import.fsproj" />
+    <ProjectReference Include="../Fable.Helpers.ReactOpenLayers/Fable.Helpers.ReactOpenLayers.fsproj" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Global.fs" />
-    <!-- Info -->
+    <Compile Include="ImageType.fs" />
     <Compile Include="Info/View.fs" />
-    <!-- Home -->
     <Compile Include="Location/Types.fs" />
     <Compile Include="Location/State.fs" />
     <Compile Include="Location/View.fs" />
-    <!-- ImageType -->
     <Compile Include="ImageType/Types.fs" />
     <Compile Include="ImageType/State.fs" />
     <Compile Include="ImageType/View.fs" />
-    <!-- Navbar -->
     <Compile Include="Navbar/View.fs" />
-    <!-- App -->
     <Compile Include="Types.fs" />
     <Compile Include="State.fs" />
     <Compile Include="App.fs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="../Fable.Import/Fable.Import.fsproj" />
-    <ProjectReference Include="../Fable.Helpers.ReactOpenLayers/Fable.Helpers.ReactOpenLayers.fsproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

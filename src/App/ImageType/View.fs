@@ -19,11 +19,9 @@ let orientationButton dispatch (name, orientation) =
 let root model dispatch =
     div [] [
         span [] [ str (sprintf "Select Image Type") ]
-        span [] [
-            str "Buildings in Great Britain"
-            img [ Props.Src @"https://cadastral.blob.core.windows.net/thumbnails/gb.png"
-                  (Props.OnClick (fun _ -> dispatch (SelectLocation))) ] 
-            str "Tax Lots in NYC"
-            img [ Props.Src @"https://cadastral.blob.core.windows.net/thumbnails/nyc.png"
-                  (Props.OnClick (fun _ -> dispatch (SelectLocation))) ] ] ]       
-
+        span [] (Cadastral.ImageType.imageTypes
+                 |> List.map (fun imageType -> 
+                        span [] [ str imageType.Name
+                                  img [ Props.Src imageType.ThumbnailUrl
+                                        Props.OnClick (fun _ -> dispatch (SelectLocation)) ]
+                                ])) ]
