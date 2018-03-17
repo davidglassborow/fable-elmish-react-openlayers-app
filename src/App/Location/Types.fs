@@ -4,6 +4,7 @@ open Fable.Helpers
 
 type Model = {
     name: string
+    imageTypeIndex: int
     coordinate: OpenLayers.Ol.Coordinate
     zoom: float
     orientation: ReactOpenLayers.Orientation
