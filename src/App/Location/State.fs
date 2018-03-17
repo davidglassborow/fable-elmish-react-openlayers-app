@@ -5,12 +5,12 @@ open Types
 open Fable.Helpers
 
 let init () : Model * Cmd<Msg> =
-    let imageTypeIndex = 0 // TODO pass through URL?
+    let imageTypeIndex = 1 // TODO pass through URL?
     let imageType = Cadastral.ImageType.imageTypes.[imageTypeIndex]
     {   name = imageType.Name
         imageTypeIndex = imageTypeIndex 
         coordinate = (imageType.Lon, imageType.Lat) |> Ol.proj.fromLonLat
-        zoom = 14. // TODO add default zoom to imageTypes
+        zoom = imageType.DefaultZoom
         orientation = ReactOpenLayers.Landscape
     }, Cmd.none
 

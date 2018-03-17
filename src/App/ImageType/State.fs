@@ -6,8 +6,7 @@ open Fable.Helpers
 open Elmish.Browser.Navigation
 
 let init () : Model * Cmd<Msg> =
-    { imageType = Cadastral.ImageType.imageTypes.[0] }, Cmd.none
-
+    { imageType = Cadastral.ImageType.imageTypes.[1] }, Cmd.none
 let update msg model : Model * Cmd<Msg> =
     match msg with
     | SelectLocation imageType ->
