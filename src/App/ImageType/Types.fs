@@ -3,13 +3,9 @@ open Fable.Import
 open Fable.Helpers
 
 type Model = {
-    name: string
-    coordinate: OpenLayers.Ol.Coordinate
-    zoom: float
-    orientation: ReactOpenLayers.Orientation
+    imageType : Cadastral.ImageType.ImageType
 }
 
 type Msg =
-  | ChangePlace of (string * OpenLayers.Ol.Coordinate * float)
-  | ChangeOrientation of ReactOpenLayers.Orientation
-  | SelectLocation // TODO add payload
+  | SelectLocation of Cadastral.ImageType.ImageType
+ 
