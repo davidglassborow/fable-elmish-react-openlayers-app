@@ -9,9 +9,10 @@ open Types
 
 let pageParser: Parser<Page->Page,Page> =
   oneOf [
-    map About (s "about")
-    map Counter (s "counter")
-    map Home (s "home")
+    // map About (s "about")
+    // map Counter (s "counter")
+    map ImageType (s "imagetype")
+    map Location (s "location")
   ]
 
 let urlUpdate (result: Option<Page>) model =
@@ -23,22 +24,25 @@ let urlUpdate (result: Option<Page>) model =
       { model with currentPage = page }, []
 
 let init result =
-  let (counter, counterCmd) = Counter.State.init()
-  let (home, homeCmd) = Home.State.init()
+  let (imageType, imageTypeCmd) = ImageType.State.init()
+  let (location, locationCmd) = Location.State.init()
   let (model, cmd) =
     urlUpdate result
-      { currentPage = Home
-        counter = counter
-        home = home }
+      { currentPage = ImageType
+        imageType = imageType
+        location = location }
   model, Cmd.batch [ cmd
-                     Cmd.map CounterMsg counterCmd
-                     Cmd.map HomeMsg homeCmd ]
+                     Cmd.map ImageTypeMsg imageTypeCmd
+                     Cmd.map LocationMsg locationCmd ]
 
 let update msg model =
   match msg with
-  | CounterMsg msg ->
-      let (counter, counterCmd) = Counter.State.update msg model.counter
-      { model with counter = counter }, Cmd.map CounterMsg counterCmd
-  | HomeMsg msg ->
-      let (home, homeCmd) = Home.State.update msg model.home
-      { model with home = home }, Cmd.map HomeMsg homeCmd
+  // | CounterMsg msg ->
+  //     let (counter, counterCmd) = Counter.State.update msg model.counter
+  //     { model with counter = counter }, Cmd.map CounterMsg counterCmd
+  | ImageTypeMsg msg ->
+      let (imageType, imageTypeCmd) = ImageType.State.update msg model.imageType
+      { model with imageType = imageType }, Cmd.map ImageTypeMsg imageTypeCmd
+  | LocationMsg msg ->
+      let (location, locationCmd) = Location.State.update msg model.location
+      { model with location = location }, Cmd.map LocationMsg locationCmd

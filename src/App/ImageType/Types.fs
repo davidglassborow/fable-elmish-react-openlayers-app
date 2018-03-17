@@ -1,4 +1,4 @@
-module Home.Types
+module ImageType.Types
 open Fable.Import
 open Fable.Helpers
 

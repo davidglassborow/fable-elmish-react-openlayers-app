@@ -33,17 +33,18 @@ let menu currentPage =
         [ str "General" ]
       ul
         [ ClassName "menu-list" ]
-        [ menuItem "Home" Home currentPage
-          menuItem "Counter sample" Counter currentPage
-          menuItem "About" Page.About currentPage ] ]
+        [ menuItem "Image Type" ImageType currentPage ]]
+          // menuItem "Counter sample" Counter currentPage
+          // menuItem "About" Page.About currentPage ] ]
 
 let root model dispatch =
 
   let pageHtml =
     function
-    | Page.About -> Info.View.root
-    | Counter -> Counter.View.root model.counter (CounterMsg >> dispatch)
-    | Home -> Home.View.root model.home (HomeMsg >> dispatch)
+    // | Page.About -> Info.View.root
+    // | Counter -> Counter.View.root model.counter (CounterMsg >> dispatch)
+    | ImageType -> ImageType.View.root model.imageType (ImageTypeMsg >> dispatch)
+    | Location -> Location.View.root model.location (LocationMsg >> dispatch)
 
   div
     []

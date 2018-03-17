@@ -1,4 +1,4 @@
-module Home.View
+module Location.View
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fable.Helpers.ReactOpenLayers

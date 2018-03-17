@@ -8,14 +8,14 @@
     <Compile Include="Global.fs" />
     <!-- Info -->
     <Compile Include="Info/View.fs" />
-    <!-- Counter -->
-    <Compile Include="Counter/Types.fs" />
-    <Compile Include="Counter/State.fs" />
-    <Compile Include="Counter/View.fs" />
     <!-- Home -->
-    <Compile Include="Home/Types.fs" />
-    <Compile Include="Home/State.fs" />
-    <Compile Include="Home/View.fs" />
+    <Compile Include="Location/Types.fs" />
+    <Compile Include="Location/State.fs" />
+    <Compile Include="Location/View.fs" />
+    <!-- ImageType -->
+    <Compile Include="ImageType/Types.fs" />
+    <Compile Include="ImageType/State.fs" />
+    <Compile Include="ImageType/View.fs" />
     <!-- Navbar -->
     <Compile Include="Navbar/View.fs" />
     <!-- App -->

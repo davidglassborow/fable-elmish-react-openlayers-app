@@ -1,4 +1,4 @@
-module Home.State
+module ImageType.State
 open Elmish
 open Fable.Import
 open Types
