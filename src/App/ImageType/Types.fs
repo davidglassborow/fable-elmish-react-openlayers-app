@@ -12,3 +12,4 @@ type Model = {
 type Msg =
   | ChangePlace of (string * OpenLayers.Ol.Coordinate * float)
   | ChangeOrientation of ReactOpenLayers.Orientation
+  | SelectLocation // TODO add payload

@@ -3,6 +3,7 @@ open Elmish
 open Fable.Import
 open Types
 open Fable.Helpers
+open Elmish.Browser.Navigation
 
 let init () : Model * Cmd<Msg> =
     {   name = "Amsterdam"
@@ -21,3 +22,5 @@ let update msg model : Model * Cmd<Msg> =
         }, Cmd.none
     | ChangeOrientation orientation ->
         { model with orientation = orientation }, Cmd.none
+    | SelectLocation ->
+        model, Navigation.newUrl "#location"
