@@ -17,6 +17,7 @@ let orientationButton dispatch (name, orientation) =
     ] [ str name ]
 
 let root model dispatch =
+    printfn "Location view %A" model.imageType.Name
     div [] [
         span [] [ str (sprintf "Hello %s" model.name) ]
         [   "landscape", Landscape

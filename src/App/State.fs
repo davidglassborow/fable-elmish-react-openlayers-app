@@ -36,7 +36,9 @@ let update msg model =
   match msg with
   | ImageTypeMsg msg ->
       let (imageType, imageTypeCmd) = ImageType.State.update msg model.imageType
-      { model with imageType = imageType }, Cmd.map ImageTypeMsg imageTypeCmd
+      printfn "App update: Image type: %s currentPage: %A" imageType.imageType.Name Location
+      { model with imageType = imageType; currentPage = Location }, Cmd.none //** HERE should we go back to going to #location?
+      // Cmd.none // Cmd.map ImageTypeMsg imageTypeCmd
   | LocationMsg msg ->
       let (location, locationCmd) = Location.State.update msg model.location
-      { model with location = location }, Cmd.map LocationMsg locationCmd
+      { model with location = location }, Cmd.map LocationMsg locationCmd 

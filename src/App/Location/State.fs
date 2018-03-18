@@ -5,17 +5,21 @@ open Types
 open Fable.Helpers
 
 let init () : Model * Cmd<Msg> =
-    let imageTypeIndex = 1 // TODO pass through URL?
-    let imageType = Cadastral.ImageType.imageTypes.[imageTypeIndex]
+    printfn "Initialising Location State"
+    let imageType = Cadastral.ImageType.imageTypes.[0]
     {   name = imageType.Name
-        imageTypeIndex = imageTypeIndex 
+        imageType = imageType 
         coordinate = (imageType.Lon, imageType.Lat) |> Ol.proj.fromLonLat
         zoom = imageType.DefaultZoom
         orientation = ReactOpenLayers.Landscape
     }, Cmd.none
 
 let update msg model : Model * Cmd<Msg> =
+    printfn "Updating Location State"
     match msg with
+    | SelectLocation imageType ->
+        { model with
+            imageType = imageType }, Cmd.none
     | ChangePlace (name, coordinate, zoom) ->
         { model with
             name = name
