@@ -11,18 +11,38 @@ let root model dispatch =
         div [ ClassName "message is-large" ] [ str "Select an area" ]
         div [ ClassName "columns" ]
             [
-                div [ ClassName "column is-four-fifths"]
+                div [ ClassName "column is-two-third" ]
                     [
-                        div [ ClassName "box padding:1.0rem" ]
-                            [
-                                olMap [
-                                    Center model.coordinate
-                                    Zoom model.zoom
-                                    Orientation model.orientation
-                                ] []
-                            ]
+                        olMap [
+                            Center model.coordinate
+                            Zoom model.zoom
+                            Orientation model.orientation
+                        ] []
+                    ]
+                div [ ClassName "column is-one-third" ]
+                    [
+                        span [ ClassName "column box" ] 
+                            [ 
+                                div [ ClassName "field has-addons" ]
+                                    [
+                                        div [ ClassName "control" ]
+                                            [
+                                                input [ ClassName "input"
+                                                        Placeholder "Search for places"
+                                                        Type "text" ]
+                                            ]
+                                        div [ ClassName "control" ]
+                                            [
+                                                a [ ClassName "button is-info" ]
+                                                    [ 
+                                                        str "Search"
+                                                    ]
+                                            ]
+                                    ]
+                            ] 
+                        br []
+                        button [ ClassName "button is-success" ]
+                            [ str "Select" ]
                     ]
             ]
-        button [ ClassName "button is-success" ]
-            [ str "Select" ]
     ]
