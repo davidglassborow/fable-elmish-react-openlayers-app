@@ -25,15 +25,15 @@ let menuItem label page currentPage =
             Href (toHash page) ]
           [ str label ] ]
 
-let menu currentPage =
-  aside
-    [ ClassName "menu" ]
-    [ p
-        [ ClassName "menu-label" ]
-        [ str "General" ]
-      ul
-        [ ClassName "menu-list" ]
-        [ menuItem "Image Type" ImageType currentPage ]]
+// let menu currentPage =
+//   aside
+//     [ ClassName "menu" ]
+//     [ p
+//         [ ClassName "menu-label" ]
+//         [ str "General" ]
+//       ul
+//         [ ClassName "menu-list" ]
+//         [ menuItem "Image Type" ImageType currentPage ]]
 let root model dispatch =
 
   let pageHtml =
@@ -58,9 +58,9 @@ let root model dispatch =
             [ ClassName "container" ]
             [ div
                 [ ClassName "columns" ]
-                [ div
-                    [ ClassName "column is-3" ]
-                    [ menu model.currentPage ]
+                [ // div
+                  //  [ ClassName "column is-3" ]
+                  //  [ menu model.currentPage ]
                   div
                     [ ClassName "column" ]
                     [ pageHtml model.currentPage ] ] ] ] ]

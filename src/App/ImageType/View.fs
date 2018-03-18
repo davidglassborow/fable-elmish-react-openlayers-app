@@ -7,10 +7,9 @@ open Types
 
 let root model dispatch =
     div [] [
-        span [] [ str (sprintf "Select Image Type") ]
-        span [] (Cadastral.ImageType.imageTypes
+        div [ ClassName "nav-item is-brand title is-4" ] [ str "Select an image type" ]
+        div [] (Cadastral.ImageType.imageTypes
                  |> List.map (fun imageType -> 
-                        span [] [ str imageType.Name
-                                  img [ Props.Src imageType.ThumbnailUrl
-                                        Props.OnClick (fun _ -> dispatch (SelectLocation imageType)) ]
-                                ])) ] 
+                        div [] [ img [ Props.Src imageType.ThumbnailUrl
+                                       Props.OnClick (fun _ -> dispatch (SelectLocation imageType)) ]
+                                 str imageType.Name ])) ] 

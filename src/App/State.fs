@@ -37,7 +37,7 @@ let update msg model =
   | ImageTypeMsg msg ->
       let (imageType, imageTypeCmd) = ImageType.State.update msg model.imageType
       printfn "App update: Image type: %s currentPage: %A" imageType.imageType.Name Location
-      { model with imageType = imageType; currentPage = Location }, Cmd.none //** HERE should we go back to going to #location?
+      { model with imageType = imageType; currentPage = Location }, Navigation.newUrl "#location"
       // Cmd.none // Cmd.map ImageTypeMsg imageTypeCmd
   | LocationMsg msg ->
       let (location, locationCmd) = Location.State.update msg model.location

@@ -12,5 +12,5 @@ let update msg model : Model * Cmd<Msg> =
     | SelectLocation imageType ->
         printfn "Image type is %s" imageType.Name // TODO remove
         { model with imageType = imageType }, Cmd.none
-        //{ imageType = imageType }, Navigation.newUrl "#location"
+        //{ imageType = imageType }, Navigation.newUrl "#location"  
 

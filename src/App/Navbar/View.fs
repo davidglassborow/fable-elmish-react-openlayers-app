@@ -33,7 +33,7 @@ let root =
         [ div
             [ ClassName "nav-left" ]
             [ h1
-                [ ClassName "nav-item is-brand title is-4" ]
+                [ ClassName "nav-item is-brand subtitle is-4" ]
                 [ str "ArtFunction" ] ]
           div
             [ ClassName "nav-right" ]

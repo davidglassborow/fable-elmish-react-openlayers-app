@@ -17,9 +17,9 @@ let init () : Model * Cmd<Msg> =
 let update msg model : Model * Cmd<Msg> =
     printfn "Updating Location State"
     match msg with
-    | SelectLocation imageType ->
-        { model with
-            imageType = imageType }, Cmd.none
+    // | SelectLocation imageType ->
+    //     { model with
+    //         imageType = imageType }, Cmd.none
     | ChangePlace (name, coordinate, zoom) ->
         { model with
             name = name
