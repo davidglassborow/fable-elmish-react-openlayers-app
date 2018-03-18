@@ -11,6 +11,7 @@ let pageParser: Parser<Page->Page,Page> =
   oneOf [
     map ImageType (s "imagetype")
     map Location (s "location")
+    map ColorScheme (s "colorscheme")
   ]
 
 let urlUpdate (result: Option<Page>) model =
@@ -24,14 +25,17 @@ let urlUpdate (result: Option<Page>) model =
 let init result =
   let (imageType, imageTypeCmd) = ImageType.State.init()
   let (location, locationCmd) = Location.State.init()
+  let (colorScheme, colorSchemeCmd) = ColorScheme.State.init()
   let (model, cmd) =
     urlUpdate result
       { currentPage = ImageType
         imageType = imageType
-        location = location }
+        location = location
+        colorScheme = colorScheme }
   model, Cmd.batch [ cmd
                      Cmd.map ImageTypeMsg imageTypeCmd
-                     Cmd.map LocationMsg locationCmd ]
+                     Cmd.map LocationMsg locationCmd 
+                     Cmd.map ColorSchemeMsg colorSchemeCmd ]
 let update msg model =
   match msg with
   | ImageTypeMsg msg ->
@@ -41,4 +45,8 @@ let update msg model =
       // Cmd.none // Cmd.map ImageTypeMsg imageTypeCmd
   | LocationMsg msg ->
       let (location, locationCmd) = Location.State.update msg model.location
-      { model with location = location }, Cmd.map LocationMsg locationCmd 
+      { model with location = location }, Navigation.newUrl "#colorscheme"
+      //{ model with location = location }, Cmd.map LocationMsg locationCmd  
+  | ColorSchemeMsg msg ->
+      let (colorScheme, colorSchemeCmd) = ColorScheme.State.update msg model.colorScheme
+      { model with colorScheme = colorScheme }, Cmd.none

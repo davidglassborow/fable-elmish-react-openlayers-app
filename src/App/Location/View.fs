@@ -41,7 +41,8 @@ let root model dispatch =
                                     ]
                             ] 
                         br []
-                        button [ ClassName "button is-success" ]
+                        button [ ClassName "button is-success"
+                                 Props.OnClick (fun _ -> dispatch (SelectColorScheme))  ]
                             [ str "Select" ]
                     ]
             ]

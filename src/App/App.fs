@@ -40,6 +40,7 @@ let root model dispatch =
     function
     | ImageType -> ImageType.View.root model.imageType (ImageTypeMsg >> dispatch)
     | Location -> Location.View.root model.location (LocationMsg >> dispatch)
+    | ColorScheme -> ColorScheme.View.root model.colorScheme (ColorSchemeMsg >> dispatch)
     // | Location i ->
     //   // TODO horrible way of passing through image type
     //   let location = { model.location with imageTypeIndex = i }

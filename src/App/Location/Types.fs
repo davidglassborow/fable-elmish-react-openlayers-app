@@ -11,6 +11,6 @@ type Model = {
 }
 
 type Msg =
- // | SelectLocation of Cadastral.ImageType.ImageType
   | ChangePlace of (string * OpenLayers.Ol.Coordinate * float)
   | ChangeOrientation of ReactOpenLayers.Orientation
+  | SelectColorScheme

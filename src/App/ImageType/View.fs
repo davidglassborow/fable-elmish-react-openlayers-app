@@ -36,6 +36,3 @@ let root model dispatch =
                                     ]
                             ])) ] 
 
-                        // div [] [ img [ Props.Src imageType.ThumbnailUrl
-                        //                Props.OnClick (fun _ -> dispatch (SelectLocation imageType)) ]
-                        //          str imageType.Name ])) ] 

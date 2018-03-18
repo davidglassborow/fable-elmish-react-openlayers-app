@@ -28,4 +28,6 @@ let update msg model : Model * Cmd<Msg> =
         }, Cmd.none
     | ChangeOrientation orientation ->
         { model with orientation = orientation }, Cmd.none
+    | SelectColorScheme ->
+        model, Cmd.none // TODO
  
