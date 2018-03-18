@@ -7,9 +7,35 @@ open Types
 
 let root model dispatch =
     div [] [
-        div [ ClassName "nav-item is-brand title is-4" ] [ str "Select an image type" ]
+        div [ ClassName "message is-large" ] [ str "Select an image type" ]
         div [] (Cadastral.ImageType.imageTypes
                  |> List.map (fun imageType -> 
-                        div [] [ img [ Props.Src imageType.ThumbnailUrl
-                                       Props.OnClick (fun _ -> dispatch (SelectLocation imageType)) ]
-                                 str imageType.Name ])) ] 
+                        article [ ClassName "media"] 
+                            [
+                                figure [ ClassName "media-left"]
+                                    [
+                                        p [ ClassName "image is-128x128"] 
+                                            [
+                                               img [ Props.Src imageType.ThumbnailUrl
+                                                     Props.OnClick (fun _ -> dispatch (SelectLocation imageType)) ]
+                                            ]
+                                    ]
+                                div [ ClassName "media-content" ]
+                                    [
+                                        div [ ClassName "content" ]
+                                            [
+                                                p []
+                                                    [
+                                                        strong [ ClassName "label is-large" ] [ str imageType.Name ]
+                                                        br []
+                                                        small [] [ str imageType.Description ]
+                                                        br []
+                                                        em [] [ str imageType.Credit ]
+                                                    ]
+                                            ]
+                                    ]
+                            ])) ] 
+
+                        // div [] [ img [ Props.Src imageType.ThumbnailUrl
+                        //                Props.OnClick (fun _ -> dispatch (SelectLocation imageType)) ]
+                        //          str imageType.Name ])) ] 

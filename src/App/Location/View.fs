@@ -8,7 +8,7 @@ open Types
 let root model dispatch =
     printfn "Location view %A" model.imageType.Name
     div [] [
-        div [ ClassName "nav-item is-brand title is-4" ] [ str "Select an area" ]
+        div [ ClassName "message is-large" ] [ str "Select an area" ]
         olMap [
             Center model.coordinate
             Zoom model.zoom
