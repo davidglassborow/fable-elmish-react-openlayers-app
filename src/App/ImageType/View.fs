@@ -20,7 +20,8 @@ let root model dispatch =
                                                      Props.OnClick (fun _ -> dispatch (SelectLocation imageType)) ]
                                             ]
                                     ]
-                                div [ ClassName "media-content" ]
+                                div [ ClassName "media-content"
+                                      Props.OnClick (fun _ -> dispatch (SelectLocation imageType)) ]
                                     [
                                         div [ ClassName "content" ]
                                             [

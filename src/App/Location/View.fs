@@ -10,14 +10,17 @@ let root model dispatch =
     div [] [
         div [ ClassName "message is-large" ] [ str "Select an area" ]
         div [ ClassName "columns" ]
-            [
+            [ 
                 div [ ClassName "column is-two-third" ]
                     [
-                        olMap [
-                            Center model.coordinate
-                            Zoom model.zoom
-                            Orientation model.orientation
-                        ] []
+                        span  [ ClassName "column box" ]
+                            [
+                                olMap [
+                                    Center model.coordinate
+                                    Zoom model.zoom
+                                    Orientation model.orientation
+                                ] []
+                            ]
                     ]
                 div [ ClassName "column is-one-third" ]
                     [
@@ -40,7 +43,7 @@ let root model dispatch =
                                             ]
                                     ]
                             ] 
-                        br []
+                        hr []
                         button [ ClassName "button is-success"
                                  Props.OnClick (fun _ -> dispatch (SelectColorScheme))  ]
                             [ str "Select" ]
