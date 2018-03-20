@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -6,6 +5,7 @@
   <ItemGroup>
     <Compile Include="Fable.Import.OpenLayers.fs" />
     <Compile Include="Fable.Import.Ol.fs" />
+    <Compile Include="Fable.Import.ReactColor.fs" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
