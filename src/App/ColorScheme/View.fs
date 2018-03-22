@@ -3,6 +3,7 @@ module ColorScheme.View
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fable.Import.ReactColor
+open Fable.Import.Collapse
 
 let allColors =
     let levels = ["00"; "80"; "ff"]
@@ -31,7 +32,11 @@ let root model dispatch =
             hr []
             str "Fill"
             br []
-            hr []
+            collapse [ IsOpened false ]
+                [
+                    str "Hello"
+                    str "World"
+                ] 
             str "Outline"
             br []
         ]
