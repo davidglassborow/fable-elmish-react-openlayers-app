@@ -34,6 +34,9 @@
     "webpack-dev-server": "^2.11.2"
   },
   "dependencies": {
+    "bulma-checkradio": "^1.0.1",
+    "bulma-switch": "^1.0.1",
+    "font-awesome": "^4.7.0",
     "react-collapse": "^4.0.3",
     "react-color": "^2.14.0",
     "react-motion": "^0.5.2"
