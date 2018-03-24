@@ -18,20 +18,47 @@ let allColors =
                     yield (sprintf "#%s%s%s" r g b)
     |]
 
-let paletteEntry() =
-    let colorChip = div [ Props.Style [ CSSProp.Background "yellow"; CSSProp.Width "100px" ] ] [ str "_" ]
+(*
+Color.FromArgb(254, 175,  44)
+Color.FromArgb(255,  88, 180)
+Color.FromArgb(  0, 161, 215)
+Color.FromArgb(221, 239,  77)
+Color.FromArgb(255, 211,  54)    
+*)
 
-    span []
+let rgbString (r,g,b)=
+    sprintf "#%02x%02x%02x" r g b
+let stickyNotes =
+    [
+        (254, 175,  44)
+        (255,  88, 180)
+        (  0, 161, 215)
+        (221, 239,  77)
+        (255, 211,  54)
+    ] |> List.map rgbString
+
+let dryWipe =
+    [
+        (  0,   0,   0)
+        (230,   0,   0)
+        (  0, 200,   0)
+        (  0,   0, 230)
+        (100,  50,  50)
+
+    ] |> List.map rgbString    
+
+let colorChip (colorName : string) = 
+    div [ Props.Style [ 
+                        CSSProp.Background colorName
+                        CSSProp.Height "30px"
+                        CSSProp.Width "30px"
+                        CSSProp.Display "inline-block"
+                        CSSProp.TextAlign "center" ] ] [ ]
+let palettes =
+    div [] 
         [
-            Tile.ancestor [] 
-                [
-                    Tile.parent [ ]
-                        [
-                            Tile.child [ Tile.Size Tile.Is1; Tile.CustomClass "Yellow" ] [ colorChip ]
-                            Tile.child [ Tile.Size Tile.Is1 ] [ colorChip ]
-                            Tile.child [ Tile.Size Tile.Is1 ] [ colorChip ]
-                        ]
-                ]
+            div [] ( stickyNotes |> List.map colorChip )
+            div [] ( dryWipe |> List.map colorChip )
         ]
 
 let foregroundOneColor (model : ColorScheme.Types.Model) =
@@ -84,7 +111,7 @@ let root model dispatch =
                                 Switch.switch [ Switch.IsThin; Switch.Checked true ] [ str "Completely random" ]  
                                 Switch.switch [ Switch.IsThin; Switch.Checked false ] [ str "Random from palette" ]
                                 collapse [ IsOpened true ]
-                                    [ paletteEntry() ]                            
+                                    [ palettes ]                            
                                 Switch.switch [ Switch.IsThin; Switch.Checked false ] [ str "From building orientation" ]
                             ]
                         ]
