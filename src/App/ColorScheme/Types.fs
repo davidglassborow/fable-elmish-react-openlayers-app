@@ -2,12 +2,19 @@ module ColorScheme.Types
 open Fable.Import
 open Fable.Helpers
 
-type SchemeKind = | Random 
+type RandomKind =
+| Completely
+| FromPallette
+| FromOrientation
+
+type Foreground =
+| Single
+| Random of RandomKind
 
 type Model = {
-    schemeKind : SchemeKind
+    foreground : Foreground
 }
 
 type Msg =
-  | DoSomething 
+  | SetForegroundRandom of bool 
  
