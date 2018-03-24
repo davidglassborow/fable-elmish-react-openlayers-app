@@ -18,6 +18,22 @@ let allColors =
                     yield (sprintf "#%s%s%s" r g b)
     |]
 
+let paletteEntry() =
+    let colorChip = div [ Props.Style [ CSSProp.Background "yellow"; CSSProp.Width "100px" ] ] [ str "_" ]
+
+    span []
+        [
+            Tile.ancestor [] 
+                [
+                    Tile.parent [ ]
+                        [
+                            Tile.child [ Tile.Size Tile.Is1; Tile.CustomClass "Yellow" ] [ colorChip ]
+                            Tile.child [ Tile.Size Tile.Is1 ] [ colorChip ]
+                            Tile.child [ Tile.Size Tile.Is1 ] [ colorChip ]
+                        ]
+                ]
+        ]
+
 let foregroundOneColor (model : ColorScheme.Types.Model) =
     match model.foreground with
     | Foreground.Single -> true
@@ -66,7 +82,9 @@ let root model dispatch =
                           collapse [ IsOpened (fgOneColor |> not) ] 
                             [
                                 Switch.switch [ Switch.IsThin; Switch.Checked true ] [ str "Completely random" ]  
-                                Switch.switch [ Switch.IsThin; Switch.Checked false ] [ str "Random from palette" ]                            
+                                Switch.switch [ Switch.IsThin; Switch.Checked false ] [ str "Random from palette" ]
+                                collapse [ IsOpened true ]
+                                    [ paletteEntry() ]                            
                                 Switch.switch [ Switch.IsThin; Switch.Checked false ] [ str "From building orientation" ]
                             ]
                         ]
