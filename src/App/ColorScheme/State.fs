@@ -9,12 +9,11 @@ let init () : Model * Cmd<Msg> =
     { foreground = Foreground.Single }, Cmd.none
 let update msg model : Model * Cmd<Msg> =
     match msg with
-    | SetForegroundRandom isRandom ->
+    | ToggleForegroundRandom ->
         let model' =
-            if isRandom then
-                { model with foreground = (Foreground.Random RandomKind.Completely) }
-            else
-                { model with foreground = (Foreground.Single)}
+            match model.foreground with
+            | Foreground.Single -> { model with foreground = (Foreground.Random RandomKind.Completely) }
+            | Foreground.Random _ ->  { model with foreground = (Foreground.Single)}
        
         model', Cmd.none
 

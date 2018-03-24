@@ -24,6 +24,7 @@ let foregroundOneColor (model : ColorScheme.Types.Model) =
     | Foreground.Random _ -> false
 
 let root model dispatch =
+    let fgOneColor = model |> foregroundOneColor
     div [] 
         [
             div [ ClassName "message is-large" ]
@@ -45,19 +46,24 @@ let root model dispatch =
                     div [ ]
                         [ Switch.switch 
                             [ 
-                                Switch.Checked (model |> foregroundOneColor)
-                                Switch.OnChange (fun _ -> dispatch (SetForegroundRandom true)) // TODO set from switch state
+                                Switch.Checked fgOneColor
+                                Switch.OnChange (fun _ -> dispatch ToggleForegroundRandom)
                             ] 
                             [ str "One color" ]
-                          collapse [ IsOpened (model |> foregroundOneColor) ] 
+                          collapse [ IsOpened fgOneColor ] 
                             [
                                 circlePicker [ CircleSize 20
                                                CircleSpacing 10
                                                Colors allColors
                                                Width "400px" ] []                            
                             ]
-                          Switch.switch [ Switch.Checked (model |> foregroundOneColor |> not) ] [ str "Random colors" ] 
-                          collapse [ IsOpened (model |> foregroundOneColor |> not) ] 
+                          Switch.switch 
+                            [ 
+                                Switch.Checked (fgOneColor |> not) 
+                                Switch.OnChange (fun _ -> dispatch ToggleForegroundRandom)
+                            ] 
+                            [ str "Random colors" ] 
+                          collapse [ IsOpened (fgOneColor |> not) ] 
                             [
                                 Switch.switch [ Switch.IsThin; Switch.Checked true ] [ str "Completely random" ]  
                                 Switch.switch [ Switch.IsThin; Switch.Checked false ] [ str "Random from palette" ]                            

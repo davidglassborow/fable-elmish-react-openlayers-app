@@ -16,5 +16,5 @@ type Model = {
 }
 
 type Msg =
-  | SetForegroundRandom of bool 
+  | ToggleForegroundRandom
  
