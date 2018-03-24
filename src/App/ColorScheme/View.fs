@@ -6,46 +6,10 @@ open Fable.Import.ReactColor
 open Fable.Import.Collapse
 open Fulma
 open Fulma.Layouts
+open Fulma.Elements
 open Fulma.Extensions
 open ColorScheme.Types
-
-let allColors =
-    let levels = ["00"; "80"; "ff"]
-    [|
-        for r in levels do
-            for g in levels do
-                for b in levels do
-                    yield (sprintf "#%s%s%s" r g b)
-    |]
-
-(*
-Color.FromArgb(254, 175,  44)
-Color.FromArgb(255,  88, 180)
-Color.FromArgb(  0, 161, 215)
-Color.FromArgb(221, 239,  77)
-Color.FromArgb(255, 211,  54)    
-*)
-
-let rgbString (r,g,b)=
-    sprintf "#%02x%02x%02x" r g b
-let stickyNotes =
-    [
-        (254, 175,  44)
-        (255,  88, 180)
-        (  0, 161, 215)
-        (221, 239,  77)
-        (255, 211,  54)
-    ] |> List.map rgbString
-
-let dryWipe =
-    [
-        (  0,   0,   0)
-        (230,   0,   0)
-        (  0, 200,   0)
-        (  0,   0, 230)
-        (100,  50,  50)
-
-    ] |> List.map rgbString    
+open ColorScheme.Palette
 
 let colorChip (colorName : string) = 
     div [ Props.Style [ 
@@ -54,12 +18,40 @@ let colorChip (colorName : string) =
                         CSSProp.Width "30px"
                         CSSProp.Display "inline-block"
                         CSSProp.TextAlign "center" ] ] [ ]
-let palettes =
-    div [] 
-        [
-            div [] ( stickyNotes |> List.map colorChip )
-            div [] ( dryWipe |> List.map colorChip )
-        ]
+
+let paletteStyle = 
+    [ 
+        CSSProp.Display "inline-block"
+        CSSProp.Margin "2px"
+        CSSProp.Padding "2px"
+
+    ]
+let selectedPaletteStyle = 
+    paletteStyle @
+    [ 
+        CSSProp.Border "3px"
+        CSSProp.BorderRadius "9px"
+        CSSProp.BorderStyle "solid"
+        CSSProp.BorderColor "purple"  
+    ]
+
+let foregroundPaletteDiv = 
+    div []
+        (
+            foregroundPalettes
+            |> List.map (fun p -> 
+                div [ Props.Style (if p.Name = "Donegal" then selectedPaletteStyle else paletteStyle) ]
+                    [
+                        Box.box' [ ]
+                            [
+                                div [ Props.Style [ CSSProp.PaddingLeft "5px"; CSSProp.PaddingRight "5px" ] ]
+                                    [
+                                        div [] [ str p.Name ]
+                                        div [] ( p.Colors |> List.map colorChip )
+                                    ]
+                            ]
+                    ])
+        )
 
 let foregroundOneColor (model : ColorScheme.Types.Model) =
     match model.foreground with
@@ -78,7 +70,7 @@ let root model dispatch =
                         [ str "Background" ] 
                     circlePicker [ CircleSize 20
                                    CircleSpacing 10
-                                   Colors allColors
+                                   Colors (twentySeven.Colors |> Array.ofList)
                                    Width "400px" ]
                          []
                 ]
@@ -97,7 +89,7 @@ let root model dispatch =
                             [
                                 circlePicker [ CircleSize 20
                                                CircleSpacing 10
-                                               Colors allColors
+                                               Colors (twentySeven.Colors |> Array.ofList)
                                                Width "400px" ] []                            
                             ]
                           Switch.switch 
@@ -111,10 +103,10 @@ let root model dispatch =
                                 Switch.switch [ Switch.IsThin; Switch.Checked true ] [ str "Completely random" ]  
                                 Switch.switch [ Switch.IsThin; Switch.Checked false ] [ str "Random from palette" ]
                                 collapse [ IsOpened true ]
-                                    [ palettes ]                            
+                                    [ foregroundPaletteDiv ]                       
                                 Switch.switch [ Switch.IsThin; Switch.Checked false ] [ str "From building orientation" ]
+                                Switch.switch [ Switch.IsThin; Switch.Checked false ] [ str "Distance from center" ]
                             ]
                         ]
                 ]
         ]
-
