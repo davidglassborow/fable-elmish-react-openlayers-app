@@ -40,7 +40,7 @@ let foregroundPaletteDiv =
         (
             foregroundPalettes
             |> List.map (fun p -> 
-                div [ Props.Style (if p.Name = "Donegal" then selectedPaletteStyle else paletteStyle) ]
+                div [ Props.Style (if p.Name = "Sticky Notes" then selectedPaletteStyle else paletteStyle) ]
                     [
                         Box.box' [ ]
                             [
@@ -58,6 +58,20 @@ let foregroundOneColor (model : ColorScheme.Types.Model) =
     | Foreground.Single -> true
     | Foreground.Random _ -> false
 
+let singleColorPicker = 
+    div [ Props.Style 
+            [ CSSProp.BackgroundColor "#d0d0d0"
+              CSSProp.Padding "8px"
+              CSSProp.Width "276px"
+              CSSProp.BorderRadius "15px" ] ]
+        [
+            circlePicker [ CircleSize 20
+                           CircleSpacing 10
+                           Colors (backgroundPalette.Colors |> Array.ofList)
+                           Width "280px" ]
+                 []
+        ]
+
 let root model dispatch =
     let fgOneColor = model |> foregroundOneColor
     div [] 
@@ -68,11 +82,7 @@ let root model dispatch =
                 [
                     div [ ClassName "message is-medium" ]
                         [ str "Background" ] 
-                    circlePicker [ CircleSize 20
-                                   CircleSpacing 10
-                                   Colors (twentySeven.Colors |> Array.ofList)
-                                   Width "400px" ]
-                         []
+                    singleColorPicker
                 ]
             div [ ]
                 [
@@ -87,25 +97,27 @@ let root model dispatch =
                             [ str "One color" ]
                           collapse [ IsOpened fgOneColor ] 
                             [
-                                circlePicker [ CircleSize 20
-                                               CircleSpacing 10
-                                               Colors (twentySeven.Colors |> Array.ofList)
-                                               Width "400px" ] []                            
+                                singleColorPicker                           
                             ]
                           Switch.switch 
                             [ 
                                 Switch.Checked (fgOneColor |> not) 
                                 Switch.OnChange (fun _ -> dispatch ToggleForegroundRandom)
                             ] 
-                            [ str "Random colors" ] 
+                            [ str "Completely random" ] 
+                          Switch.switch 
+                            [ 
+                                Switch.Checked (fgOneColor |> not) 
+                                Switch.OnChange (fun _ -> dispatch ToggleForegroundRandom)
+                            ] 
+                            [ str "From palette" ] 
                           collapse [ IsOpened (fgOneColor |> not) ] 
                             [
-                                Switch.switch [ Switch.IsThin; Switch.Checked true ] [ str "Completely random" ]  
-                                Switch.switch [ Switch.IsThin; Switch.Checked false ] [ str "Random from palette" ]
+                                Switch.switch [ Switch.IsThin; Switch.Checked true ] [ str "Random" ]
+                                Switch.switch [ Switch.IsThin; Switch.Checked false ] [ str "Based on orientation" ]
+                                Switch.switch [ Switch.IsThin; Switch.Checked false ] [ str "Based on distance from center" ]
                                 collapse [ IsOpened true ]
                                     [ foregroundPaletteDiv ]                       
-                                Switch.switch [ Switch.IsThin; Switch.Checked false ] [ str "From building orientation" ]
-                                Switch.switch [ Switch.IsThin; Switch.Checked false ] [ str "Distance from center" ]
                             ]
                         ]
                 ]
