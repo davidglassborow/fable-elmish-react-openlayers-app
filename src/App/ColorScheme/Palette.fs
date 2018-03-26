@@ -160,7 +160,7 @@ let theOrangery =
         oranges @ greens }      
 
 let tenShadesOfGray =
-    { Name = "Ten shades of..."
+    { Name = "Nifty Shades of Gray"
       Colors = rgbRange(10, 100, 200, 100, 200, 100, 200) }
 
 let mordor =

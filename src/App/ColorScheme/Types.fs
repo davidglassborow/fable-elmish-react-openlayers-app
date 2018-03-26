@@ -2,19 +2,20 @@ module ColorScheme.Types
 open Fable.Import
 open Fable.Helpers
 
-type RandomKind =
-| Completely
-| FromPallette
-| FromOrientation
+type PaletteAssignment =
+| Random
+| Orientation
+| DistanceFromCenter
 
 type Foreground =
-| Single
-| Random of RandomKind
+| OneColor
+| Random
+| FromPalette of PaletteAssignment
 
 type Model = {
     foreground : Foreground
 }
 
 type Msg =
-  | ToggleForegroundRandom
+  | SetForeground of Foreground
  
