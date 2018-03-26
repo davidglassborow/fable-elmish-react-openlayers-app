@@ -149,7 +149,7 @@ let dayAtThePool =
     { Name = "Day at the Pool"
       Colors = rgbRange(5, 0, 0, 150, 255, 150, 255) }
 let melony =
-    { Name = "Melony"
+    { Name = "Unchained Melony"
       Colors = rgbRange(8, 190, 255, 80, 128, 80, 80) }
 
 let theOrangery =

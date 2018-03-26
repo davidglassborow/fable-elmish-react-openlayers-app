@@ -68,6 +68,23 @@ let foregroundFromPalette (model : ColorScheme.Types.Model) =
     | Foreground.FromPalette _ -> true
     | _ -> false
 
+let foregroundFromPaletteRandom (model : ColorScheme.Types.Model) =
+    match model.foreground with
+    | Foreground.FromPalette PaletteAssignment.Random -> true
+    | _ -> false
+
+
+let foregroundFromPaletteOrientation (model : ColorScheme.Types.Model) =
+    match model.foreground with
+    | Foreground.FromPalette PaletteAssignment.Orientation -> true
+    | _ -> false    
+
+
+let foregroundFromPaletteDisanceFromCenter (model : ColorScheme.Types.Model) =
+    match model.foreground with
+    | Foreground.FromPalette PaletteAssignment.DistanceFromCenter -> true
+    | _ -> false        
+
 let singleColorPicker = 
     div [ Props.Style 
             [ CSSProp.BackgroundColor "#f5f5f5"
@@ -82,34 +99,59 @@ let singleColorPicker =
                  []
         ]
 
+let screenHeading s = 
+            div [ ClassName "is-size-3" ]
+                [ str s ]
+
+let sectionHeading s = 
+            div [ ClassName "is-size-4" ]
+                [ str s ]
+
+let infoPrompt s =
+            div [ ClassName "is-size-5 is-italic" ]
+                [ str s ]
+
+
+// let switchLabel s = 
+//             div
+//                 [ ClassName "is-size-5"
+//                   // Props.Style [ CSSProp.Display "inline-block" ]
+//                 ]
+//                 [ str s ]
+
 let root model dispatch =
     let fgOneColor = model |> foregroundOneColor
     let fgRandom = model |> foregroundRandom
     let fgPalette = model |> foregroundFromPalette
+    let fgPaletteRandom = model |> foregroundFromPaletteRandom
+    let fgPaletteOrientation = model |> foregroundFromPaletteOrientation
+    let fgPaletteDistanceFromCenter = model |> foregroundFromPaletteDisanceFromCenter
     div [] 
         [
-            div [ ClassName "message is-large" ]
-                [ str "Select a color scheme" ]
+            screenHeading "Select a color scheme"
             div [ ]
                 [
-                    div [ ClassName "message is-medium" ]
-                        [ str "Background" ] 
+                    sectionHeading "Background" 
+                    infoPrompt "The background will be the color you pick here"
+                    br []
                     singleColorPicker
                 ]
+            hr []
             div [ ]
                 [
-                    div [ ClassName "message is-medium" ]
-                        [ str "Foreground" ] 
+                    sectionHeading "Foreground"
+                    infoPrompt "The shapes will use the color scheme you pick here"
+                    br [] 
                     div [ ]
                         [ Switch.switch 
                             [ 
                                 Switch.Checked fgOneColor
                                 Switch.OnChange (fun _ -> dispatch (SetForeground Foreground.OneColor))
                             ] 
-                            [ str "One color" ]
+                            [ str "One Color" ]
                           collapse [ IsOpened fgOneColor ] 
                             [
-                                str "All the shapes will be the color you pick here"
+                                //infoPrompt "All the shapes will be the color you pick here"
                                 singleColorPicker                           
                             ]
                           Switch.switch 
@@ -120,7 +162,7 @@ let root model dispatch =
                             [ str "Completely random" ] 
                           collapse [ IsOpened fgRandom ] 
                             [
-                                str "The shapes will have completely random colors"
+                                // infoPrompt "The shapes will have completely random colors"
                             ] 
                           Switch.switch 
                             [ 
@@ -130,28 +172,28 @@ let root model dispatch =
                             [ str "From palette" ] 
                           collapse [ IsOpened fgPalette ] 
                             [
-                                str "The shapes will have colors based on the assigment method and palette you pick below"
+                                //infoPrompt "The shapes will have colors based on the assigment method and palette you pick below"
                                 Switch.switch 
                                     [ 
                                         Switch.IsThin
-                                        Switch.Checked true 
+                                        Switch.Checked fgPaletteRandom 
                                         Switch.OnChange (fun _ -> dispatch (SetForeground (Foreground.FromPalette PaletteAssignment.Random)))
                                     ] 
-                                    [ str "Use colors picked at random from the palette" ]
+                                    [ str "At random" ]
                                 Switch.switch 
                                     [ 
                                         Switch.IsThin
-                                        Switch.Checked false 
+                                        Switch.Checked fgPaletteOrientation 
                                         Switch.OnChange (fun _ -> dispatch (SetForeground (Foreground.FromPalette PaletteAssignment.Orientation)))
                                     ] 
-                                    [ str "Use colors from the palette based on shape orientation" ]
+                                    [ str "By shape orientation" ]
                                 Switch.switch 
                                     [ 
                                         Switch.IsThin
-                                        Switch.Checked false 
+                                        Switch.Checked fgPaletteDistanceFromCenter 
                                         Switch.OnChange (fun _ -> dispatch (SetForeground (Foreground.FromPalette PaletteAssignment.DistanceFromCenter)))
                                     ] 
-                                    [ str "Use colors from the palette based on distance from center" ]
+                                    [ str "By distance from center" ]
                                 collapse [ IsOpened fgPalette ]
                                     [ foregroundPaletteDiv ]                       
                             ]
