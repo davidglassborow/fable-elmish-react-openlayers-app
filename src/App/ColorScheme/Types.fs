@@ -1,4 +1,5 @@
 module ColorScheme.Types
+open ColorScheme.Palette
 open Fable.Import
 open Fable.Helpers
 
@@ -10,7 +11,7 @@ type PaletteAssignment =
 type Foreground =
 | OneColor
 | Random
-| FromPalette of PaletteAssignment
+| FromPalette of PaletteAssignment * Palette
 
 type Model = {
     foreground : Foreground

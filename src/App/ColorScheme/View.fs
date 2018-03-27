@@ -35,16 +35,26 @@ let selectedPaletteStyle =
         CSSProp.BorderColor "purple"  
     ]
 
-let foregroundPaletteDiv = 
+let paletteIsSelected (model : ColorScheme.Types.Model) (palette : Palette) =
+    match model.foreground with
+    | FromPalette (_, p) -> p = palette
+    | _ -> false
+let foregroundPaletteDiv model dispatch = 
     div []
         (
             foregroundPalettes
             |> List.map (fun p -> 
-                div [ Props.Style (if p.Name = "Sticky Notes" then selectedPaletteStyle else paletteStyle) ]
+                div [ Props.Style (if paletteIsSelected model p then selectedPaletteStyle else paletteStyle) ]
                     [
                         Box.box' [ ]
                             [
-                                div [ Props.Style [ CSSProp.PaddingLeft "5px"; CSSProp.PaddingRight "5px" ] ]
+                                div 
+                                    [ 
+                                        Props.Style [ CSSProp.PaddingLeft "5px"; CSSProp.PaddingRight "5px" ] 
+                                        Props.OnClick (fun _ -> 
+                                            // TODO preserve existing assignment method
+                                            dispatch (SetForeground (Foreground.FromPalette (PaletteAssignment.Random, p))))
+                                    ]
                                     [
                                         div [] [ str p.Name ]
                                         div [] ( p.Colors |> List.map colorChip )
@@ -70,19 +80,20 @@ let foregroundFromPalette (model : ColorScheme.Types.Model) =
 
 let foregroundFromPaletteRandom (model : ColorScheme.Types.Model) =
     match model.foreground with
-    | Foreground.FromPalette PaletteAssignment.Random -> true
+    | Foreground.FromPalette(PaletteAssignment.Random, _) -> true
     | _ -> false
 
 
 let foregroundFromPaletteOrientation (model : ColorScheme.Types.Model) =
     match model.foreground with
-    | Foreground.FromPalette PaletteAssignment.Orientation -> true
+    | Foreground.FromPalette(PaletteAssignment.Orientation, _) -> true
     | _ -> false    
 
 let foregroundFromPaletteDisanceFromCenter (model : ColorScheme.Types.Model) =
     match model.foreground with
-    | Foreground.FromPalette PaletteAssignment.DistanceFromCenter -> true
+    | Foreground.FromPalette(PaletteAssignment.DistanceFromCenter, _) -> true
     | _ -> false        
+
 
 let singleColorPicker = 
     div [ Props.Style 
@@ -110,6 +121,10 @@ let infoPrompt s =
             div [ ClassName "is-size-5 is-italic" ]
                 [ str s ]
 
+let infoPromptSmall s =
+            div [ ClassName "is-size-6 is-italic" ]
+                [ str s ]
+
 let root model dispatch =
     let fgOneColor = model |> foregroundOneColor
     let fgRandom = model |> foregroundRandom
@@ -132,7 +147,6 @@ let root model dispatch =
                 ]
             div [ ]
                 [
-                    //div [ Props.Style [ CSSProp.Height "5px" ] ] []
                     span [ ClassName "box"; Props.Style [ CSSProp.MarginTop "10px" ] ]
                         [
                             sectionHeading "Foreground"
@@ -156,13 +170,15 @@ let root model dispatch =
                                         Switch.OnChange (fun _ -> dispatch (SetForeground (Foreground.Random)))
                                     ] 
                                     [ str "Completely random" ] 
-                                  collapse [ IsOpened fgRandom ] 
-                                    [
-                                    ] 
                                   Switch.switch 
                                     [ 
                                         Switch.Checked fgPalette
-                                        Switch.OnChange (fun _ -> dispatch (SetForeground (Foreground.FromPalette PaletteAssignment.Random)))
+                                        Switch.OnChange (fun _ ->
+                                            let existingPalette = 
+                                                match model.foreground with
+                                                | FromPalette (_, p) -> p
+                                                | _ -> Palette.stickyNotes // TODO how default really
+                                            dispatch (SetForeground (Foreground.FromPalette (PaletteAssignment.Random, existingPalette))))
                                     ] 
                                     [ str "From palette" ] 
                                   collapse [ IsOpened fgPalette ] 
@@ -171,25 +187,40 @@ let root model dispatch =
                                             [ 
                                                 Switch.IsThin
                                                 Switch.Checked fgPaletteRandom 
-                                                Switch.OnChange (fun _ -> dispatch (SetForeground (Foreground.FromPalette PaletteAssignment.Random)))
+                                                Switch.OnChange (fun _ -> 
+                                                    let existingPalette = 
+                                                        match model.foreground with
+                                                        | FromPalette (_, p) -> p
+                                                        | _ -> Palette.stickyNotes // TODO how default really
+                                                    dispatch (SetForeground (Foreground.FromPalette (PaletteAssignment.Random, existingPalette))))
                                             ] 
                                             [ str "At random" ]
                                         Switch.switch 
                                             [ 
                                                 Switch.IsThin
                                                 Switch.Checked fgPaletteOrientation 
-                                                Switch.OnChange (fun _ -> dispatch (SetForeground (Foreground.FromPalette PaletteAssignment.Orientation)))
+                                                Switch.OnChange (fun _ -> 
+                                                    let existingPalette = 
+                                                        match model.foreground with
+                                                        | FromPalette (_, p) -> p
+                                                        | _ -> Palette.stickyNotes // TODO how default really
+                                                    dispatch (SetForeground (Foreground.FromPalette (PaletteAssignment.Orientation, existingPalette))))
                                             ] 
                                             [ str "By shape orientation" ]
                                         Switch.switch 
                                             [ 
                                                 Switch.IsThin
                                                 Switch.Checked fgPaletteDistanceFromCenter 
-                                                Switch.OnChange (fun _ -> dispatch (SetForeground (Foreground.FromPalette PaletteAssignment.DistanceFromCenter)))
+                                                Switch.OnChange (fun _ -> 
+                                                    let existingPalette = 
+                                                        match model.foreground with
+                                                        | FromPalette (_, p) -> p
+                                                        | _ -> Palette.stickyNotes // TODO how default really
+                                                    dispatch (SetForeground (Foreground.FromPalette (PaletteAssignment.DistanceFromCenter, existingPalette))))
                                             ] 
                                             [ str "By distance from center" ]
                                         collapse [ IsOpened fgPalette ]
-                                            [ foregroundPaletteDiv ]                       
+                                            [ foregroundPaletteDiv model dispatch ]                       
                                     ]
                                 ]
                         ]

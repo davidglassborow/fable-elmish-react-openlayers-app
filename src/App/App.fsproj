@@ -16,8 +16,8 @@
     <Compile Include="ImageType/Types.fs" />
     <Compile Include="ImageType/State.fs" />
     <Compile Include="ImageType/View.fs" />
-    <Compile Include="ColorScheme/Types.fs" />
     <Compile Include="ColorScheme/Palette.fs" />
+    <Compile Include="ColorScheme/Types.fs" />
     <Compile Include="ColorScheme/State.fs" />
     <Compile Include="ColorScheme/View.fs" />
     <Compile Include="Navbar/View.fs" />
