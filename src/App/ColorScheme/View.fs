@@ -24,8 +24,8 @@ let paletteStyle =
         CSSProp.Display "inline-block"
         CSSProp.Margin "2px"
         CSSProp.Padding "2px"
-
     ]
+
 let selectedPaletteStyle = 
     paletteStyle @
     [ 
@@ -79,7 +79,6 @@ let foregroundFromPaletteOrientation (model : ColorScheme.Types.Model) =
     | Foreground.FromPalette PaletteAssignment.Orientation -> true
     | _ -> false    
 
-
 let foregroundFromPaletteDisanceFromCenter (model : ColorScheme.Types.Model) =
     match model.foreground with
     | Foreground.FromPalette PaletteAssignment.DistanceFromCenter -> true
@@ -111,14 +110,6 @@ let infoPrompt s =
             div [ ClassName "is-size-5 is-italic" ]
                 [ str s ]
 
-
-// let switchLabel s = 
-//             div
-//                 [ ClassName "is-size-5"
-//                   // Props.Style [ CSSProp.Display "inline-block" ]
-//                 ]
-//                 [ str s ]
-
 let root model dispatch =
     let fgOneColor = model |> foregroundOneColor
     let fgRandom = model |> foregroundRandom
@@ -131,72 +122,76 @@ let root model dispatch =
             screenHeading "Select a color scheme"
             div [ ]
                 [
-                    sectionHeading "Background" 
-                    infoPrompt "The background will be the color you pick here"
-                    br []
-                    singleColorPicker
+                    span [ ClassName "box "]
+                        [
+                            sectionHeading "Background" 
+                            infoPrompt "The background will be the color you pick here"
+                            br []
+                            singleColorPicker
+                        ]
                 ]
-            hr []
             div [ ]
                 [
-                    sectionHeading "Foreground"
-                    infoPrompt "The shapes will use the color scheme you pick here"
-                    br [] 
-                    div [ ]
-                        [ Switch.switch 
-                            [ 
-                                Switch.Checked fgOneColor
-                                Switch.OnChange (fun _ -> dispatch (SetForeground Foreground.OneColor))
-                            ] 
-                            [ str "One Color" ]
-                          collapse [ IsOpened fgOneColor ] 
-                            [
-                                //infoPrompt "All the shapes will be the color you pick here"
-                                singleColorPicker                           
-                            ]
-                          Switch.switch 
-                            [ 
-                                Switch.Checked fgRandom 
-                                Switch.OnChange (fun _ -> dispatch (SetForeground (Foreground.Random)))
-                            ] 
-                            [ str "Completely random" ] 
-                          collapse [ IsOpened fgRandom ] 
-                            [
-                                // infoPrompt "The shapes will have completely random colors"
-                            ] 
-                          Switch.switch 
-                            [ 
-                                Switch.Checked fgPalette
-                                Switch.OnChange (fun _ -> dispatch (SetForeground (Foreground.FromPalette PaletteAssignment.Random)))
-                            ] 
-                            [ str "From palette" ] 
-                          collapse [ IsOpened fgPalette ] 
-                            [
-                                //infoPrompt "The shapes will have colors based on the assigment method and palette you pick below"
-                                Switch.switch 
+                    //div [ Props.Style [ CSSProp.Height "5px" ] ] []
+                    span [ ClassName "box"; Props.Style [ CSSProp.MarginTop "10px" ] ]
+                        [
+                            sectionHeading "Foreground"
+                            infoPrompt "The shapes will use the color scheme you pick here"
+                            br [] 
+                            div [ ]
+                                [ Switch.switch 
                                     [ 
-                                        Switch.IsThin
-                                        Switch.Checked fgPaletteRandom 
+                                        Switch.Checked fgOneColor
+                                        Switch.OnChange (fun _ -> dispatch (SetForeground Foreground.OneColor))
+                                    ] 
+                                    [ str "One Color" ]
+                                  collapse [ IsOpened fgOneColor ] 
+                                    [
+                                        singleColorPicker                           
+                                        br [] 
+                                    ]
+                                  Switch.switch 
+                                    [ 
+                                        Switch.Checked fgRandom 
+                                        Switch.OnChange (fun _ -> dispatch (SetForeground (Foreground.Random)))
+                                    ] 
+                                    [ str "Completely random" ] 
+                                  collapse [ IsOpened fgRandom ] 
+                                    [
+                                    ] 
+                                  Switch.switch 
+                                    [ 
+                                        Switch.Checked fgPalette
                                         Switch.OnChange (fun _ -> dispatch (SetForeground (Foreground.FromPalette PaletteAssignment.Random)))
                                     ] 
-                                    [ str "At random" ]
-                                Switch.switch 
-                                    [ 
-                                        Switch.IsThin
-                                        Switch.Checked fgPaletteOrientation 
-                                        Switch.OnChange (fun _ -> dispatch (SetForeground (Foreground.FromPalette PaletteAssignment.Orientation)))
-                                    ] 
-                                    [ str "By shape orientation" ]
-                                Switch.switch 
-                                    [ 
-                                        Switch.IsThin
-                                        Switch.Checked fgPaletteDistanceFromCenter 
-                                        Switch.OnChange (fun _ -> dispatch (SetForeground (Foreground.FromPalette PaletteAssignment.DistanceFromCenter)))
-                                    ] 
-                                    [ str "By distance from center" ]
-                                collapse [ IsOpened fgPalette ]
-                                    [ foregroundPaletteDiv ]                       
-                            ]
+                                    [ str "From palette" ] 
+                                  collapse [ IsOpened fgPalette ] 
+                                    [
+                                        Switch.switch 
+                                            [ 
+                                                Switch.IsThin
+                                                Switch.Checked fgPaletteRandom 
+                                                Switch.OnChange (fun _ -> dispatch (SetForeground (Foreground.FromPalette PaletteAssignment.Random)))
+                                            ] 
+                                            [ str "At random" ]
+                                        Switch.switch 
+                                            [ 
+                                                Switch.IsThin
+                                                Switch.Checked fgPaletteOrientation 
+                                                Switch.OnChange (fun _ -> dispatch (SetForeground (Foreground.FromPalette PaletteAssignment.Orientation)))
+                                            ] 
+                                            [ str "By shape orientation" ]
+                                        Switch.switch 
+                                            [ 
+                                                Switch.IsThin
+                                                Switch.Checked fgPaletteDistanceFromCenter 
+                                                Switch.OnChange (fun _ -> dispatch (SetForeground (Foreground.FromPalette PaletteAssignment.DistanceFromCenter)))
+                                            ] 
+                                            [ str "By distance from center" ]
+                                        collapse [ IsOpened fgPalette ]
+                                            [ foregroundPaletteDiv ]                       
+                                    ]
+                                ]
                         ]
                 ]
         ]
