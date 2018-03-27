@@ -125,7 +125,7 @@ let infoPromptSmall s =
             div [ ClassName "is-size-6 is-italic" ]
                 [ str s ]
 
-let root model dispatch =
+let controlView model dispatch = 
     let fgOneColor = model |> foregroundOneColor
     let fgRandom = model |> foregroundRandom
     let fgPalette = model |> foregroundFromPalette
@@ -224,5 +224,31 @@ let root model dispatch =
                                     ]
                                 ]
                         ]
+                ]
+        ]
+
+let previewView model dispatch = 
+    div []
+        [
+            screenHeading "\xA0" // Space for alignment with other column
+            span [ ClassName "box "]
+                    [
+                        sectionHeading "Preview"             
+                        img [ 
+                                Props.Src @"https://cadastral.blob.core.windows.net/thumbnails/bw-preview.png" 
+                            ]
+                    ]
+        ]
+
+let root model dispatch =
+    Columns.columns []
+        [
+            Column.column [] // [ Column.Width (Column.Desktop, Column.IsTwoThirds) ]
+                [ 
+                    controlView model dispatch
+                ]
+            Column.column [] // [ Column.Width (Column.Desktop, Column.IsTwoThirds) ]
+                [ 
+                    previewView model dispatch 
                 ]
         ]

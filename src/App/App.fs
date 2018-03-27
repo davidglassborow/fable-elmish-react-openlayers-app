@@ -54,7 +54,7 @@ let root model dispatch =
             [ ClassName "container" ]
             [ Navbar.View.root ] ]
       div
-        [ ClassName "section" ]
+        [ (*ClassName "section"*) ]
         [ div
             [ ClassName "container" ]
             [ div

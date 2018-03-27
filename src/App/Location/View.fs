@@ -11,6 +11,7 @@ let root model dispatch =
         div [ ClassName "message is-large" ] [ str "Select an area" ]
         div [ ClassName "columns" ]
             [ 
+                // TODO Use Column.column etc here
                 div [ ClassName "column is-two-third" ]
                     [
                         span  [ ClassName "column box" ]
